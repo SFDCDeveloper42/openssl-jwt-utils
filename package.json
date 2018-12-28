@@ -1,0 +1,29 @@
+{
+  "name": "openssl-jwt-utils",
+  "version": "1.0.0",
+  "description": "Toolbox to generate keys, certificates and JWT tokens",
+  "main": "jwt.js",
+  "config": {
+    "password": "x",
+    "output_path": "output"
+  },
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "gulp": "^4.0.0",
+    "njwt": "^0.4.0",
+    "secure-random": "^1.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "gen-pk": "openssl genrsa -des3 -passout pass:$npm_package_config_password -out $npm_package_config_output_path/server.pass.key 2048",
+    "gen-key": "openssl rsa -passin pass:$npm_package_config_password -in $npm_package_config_output_path/server.pass.key -out $npm_package_config_output_path/server.key",
+    "gen-pubkey": "openssl rsa -passin pass:$npm_package_config_password -in $npm_package_config_output_path/server.pass.key -pubout -out $npm_package_config_output_path/server.pub",
+    "clean": "rm $npm_package_config_output_path/server.pass.key",
+    "clean-all": "rm $npm_package_config_output_path/*",
+    "gen-csr": "openssl req -new -key $npm_package_config_output_path/server.key -out $npm_package_config_output_path/server.csr -config request.config",
+    "gen-crt": "openssl x509 -req -sha256 -days 365 -in $npm_package_config_output_path/server.csr -signkey $npm_package_config_output_path/server.key -out $npm_package_config_output_path/server.crt  ",
+    "generate-jwt": "gulp generateJwt"
+  },
+  "author": "Gerald Ramier",
+  "license": "ISC"
+}
