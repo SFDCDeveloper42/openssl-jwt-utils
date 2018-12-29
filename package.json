@@ -4,25 +4,33 @@
   "description": "Toolbox to generate keys, certificates and JWT tokens",
   "main": "jwt.js",
   "config": {
-    "password": "x",
-    "output_path": "output"
+    "pkey_password": "x",
+    "pkey_path": "output/server.key",
+    "output_path": "output",
+    "cert_validity": "365",
+    "jwt_path": "output/token.jwt",
+    "jwt_aud": "login.salesforce.com",
+    "jwt_iss": "ISSXXX.SFDC.CAPP.CLIENTID",
+    "jwt_sub": "email@subject.com",
+    "jwt_alg": "RS256"
   },
   "dependencies": {
     "fs": "0.0.1-security",
     "gulp": "^4.0.0",
-    "njwt": "^0.4.0",
-    "secure-random": "^1.1.1"
+    "njwt": "^0.4.0"
   },
   "devDependencies": {},
   "scripts": {
-    "gen-pkey-des3": "openssl genrsa -des3 -passout pass:$npm_package_config_password -out $npm_package_config_output_path/server.pass.key 2048",
-    "gen-pkey": "openssl genrsa -passout pass:$npm_package_config_password -out $npm_package_config_output_path/server.pass.key 2048",
-    "convert-key": "openssl rsa -passin pass:$npm_package_config_password -in $npm_package_config_output_path/server.pass.key -out $npm_package_config_output_path/server.key",
-    "gen-pubkey": "openssl rsa -passin pass:$npm_package_config_password -in $npm_package_config_output_path/server.pass.key -pubout -out $npm_package_config_output_path/server.pub",
-    "clean-all": "rm $npm_package_config_output_path/*",
-    "gen-csr": "openssl req -new -key $npm_package_config_output_path/server.key -out $npm_package_config_output_path/server.csr -config request.config",
-    "gen-crt": "openssl x509 -req -sha256 -days 365 -in $npm_package_config_output_path/server.csr -signkey $npm_package_config_output_path/server.key -out $npm_package_config_output_path/server.crt  ",
-    "generate-jwt": "gulp generateJwt"
+    "preinstall": "mkdir output",
+    "generate-encrypted-pkey-des3": "openssl genrsa -des3 -passout pass:$npm_package_pkey_password -out $npm_package_config_output_path/server.pass.key 2048",
+    "convert-encrypted-key": "openssl rsa -passin pass:$npm_package_pkey_password -in $npm_package_config_output_path/server.pass.key -out $npm_package_config_output_path/server.key",
+    "generate-private-key": "openssl genrsa -passout pass:$npm_package_pkey_password -out $npm_package_config_output_path/server.key 2048",    
+    "generate-public-key": "openssl rsa -passin pass:$npm_package_pkey_password -in $npm_package_config_output_path/server.pass.key -pubout -out $npm_package_config_output_path/server.pub",
+    "generate-cert-sign-request": "openssl req -new -key $npm_package_config_output_path/server.key -out $npm_package_config_output_path/server.csr -config config/certificate.config",
+    "self-sign-cert": "openssl x509 -req -sha256 -days 365 -in $npm_package_config_output_path/server.csr -signkey $npm_package_config_output_path/server.key -out $npm_package_config_output_path/server.crt",
+    "generate-jwt": "gulp generateJwt",
+    "generate-all": "npm run generate-private-key; npm run generate-cert-sign-request; npm run self-sign-cert; gulp generateJwt",
+    "clean-all": "rm $npm_package_config_output_path/*"
   },
   "author": "Gerald Ramier",
   "license": "ISC"
