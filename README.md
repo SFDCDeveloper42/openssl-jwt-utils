@@ -3,7 +3,8 @@
 To install the package:
 * clone it, remove .git
 * run npm install
-* update package.json config variables
+* update ./package.json config variables
+* update ./config/certificate.config with your organization details
 
 Here is the list of available scripts with their description:
 
