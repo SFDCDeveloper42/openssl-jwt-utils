@@ -18,3 +18,10 @@ Here is the list of available scripts with their description:
 * **generate-jwt** : Run this to generate a JWT signed with the current generated private key
 * **generate-all** : Run this to generate all keys + certs + jwt
 * **clean-all** : Run this to remove generated files
+
+Here is a sample of generated jwt:
+![Alt text](./jwt_sample.png)
+
+Here is a sample of generated selfsigned certificate:
+![Alt text](./certificate_sample.png)
+
