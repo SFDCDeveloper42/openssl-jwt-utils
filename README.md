@@ -1,11 +1,17 @@
 # openssl-jwt-utils
 
+**Create keys, certificates and JWT in one command**
+
+# Installation
 To install the package:
 * clone it, remove .git
 * run npm install
+
+# Config
 * update ./package.json config variables
 * update ./config/certificate.config with your organization details
 
+# Commands
 Here is the list of available scripts with their description:
 
 * **preinstall** : Will run automatically after npm install to create output directory where files will be created
@@ -25,3 +31,5 @@ Here is a sample of generated jwt:
 Here is a sample of generated selfsigned certificate:
 ![Alt text](./certificate_sample.png)
 
+# License
+MIT

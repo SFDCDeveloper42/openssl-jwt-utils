@@ -21,10 +21,10 @@
   },
   "devDependencies": {},
   "scripts": {
-    "preinstall": "mkdir output",
+    "preinstall": "mkdir -p output",
     "generate-encrypted-pkey-des3": "openssl genrsa -des3 -passout pass:$npm_package_pkey_password -out $npm_package_config_output_path/server.pass.key 2048",
     "convert-encrypted-key": "openssl rsa -passin pass:$npm_package_pkey_password -in $npm_package_config_output_path/server.pass.key -out $npm_package_config_output_path/server.key",
-    "generate-private-key": "openssl genrsa -passout pass:$npm_package_pkey_password -out $npm_package_config_output_path/server.key 2048",    
+    "generate-private-key": "openssl genrsa -passout pass:$npm_package_pkey_password -out $npm_package_config_output_path/server.key 2048",
     "generate-public-key": "openssl rsa -passin pass:$npm_package_pkey_password -in $npm_package_config_output_path/server.pass.key -pubout -out $npm_package_config_output_path/server.pub",
     "generate-cert-sign-request": "openssl req -new -key $npm_package_config_output_path/server.key -out $npm_package_config_output_path/server.csr -config config/certificate.config",
     "self-sign-cert": "openssl x509 -req -sha256 -days 365 -in $npm_package_config_output_path/server.csr -signkey $npm_package_config_output_path/server.key -out $npm_package_config_output_path/server.crt",
@@ -33,5 +33,5 @@
     "clean-all": "rm $npm_package_config_output_path/*"
   },
   "author": "Gerald Ramier",
-  "license": "ISC"
+  "license": "MIT"
 }
