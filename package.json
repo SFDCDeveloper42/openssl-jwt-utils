@@ -32,6 +32,10 @@
     "generate-all": "npm run generate-private-key; npm run generate-cert-sign-request; npm run self-sign-cert; gulp generateJwt",
     "clean-all": "rm $npm_package_config_output_path/*"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SFDCDeveloper42/openssl-jwt-utils.git"
+  },
   "author": "Gerald Ramier",
   "license": "MIT"
 }
